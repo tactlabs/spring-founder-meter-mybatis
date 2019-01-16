@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tact.base.mybatis.mapper.FounderMeterMapper">
+    
+    <select id="findByLinkedInLink" resultType="org.tact.base.mybatis.domain.FounderMeter" parameterType="string">
+        SELECT * FROM FOUNDER_METER WHERE LINKEDIN_LINK = #{LINKEDIN_LINK}         
+    </select>    
+    
+    <insert id="addFounderMeter" parameterType="map">
+    	INSERT INTO FOUNDER_METER (NAME, LINKEDIN_LINK, AUTH_METER, ADMIN_COMMENT, ADDED_DATE, UPDATED_DATE) 
+    	VALUES (#{NAME}, #{LINKEDIN_LINK}, #{AUTH_METER}, #{ADMIN_COMMENT}, NOW(), NOW())
+    </insert>
+    
+    <select id="getAllFounders" resultType="org.tact.base.mybatis.domain.FounderMeter" parameterType="string">
+        SELECT * FROM FOUNDER_METER         
+    </select>
+    
+    <update id="updateFounderMeterById" parameterType="map">
+    	UPDATE FOUNDER_METER
+    	SET UPDATED_DATE = NOW()
+    	
+    	<if test="NAME != null">
+    		, NAME = #{NAME}
+    	</if>
+    	    	
+    	<if test="LINKEDIN_LINK != null">
+    		, LINKEDIN_LINK = #{LINKEDIN_LINK}
+    	</if>    	
+    	<if test="AUTH_METER != null">
+    		, AUTH_METER = #{AUTH_METER}
+    	</if>
+    	
+    	<if test="ADMIN_COMMENT != null">
+    		, ADMIN_COMMENT = #{ADMIN_COMMENT}
+    	</if>
+    	WHERE ID = #{ID}
+    </update>
+    
+</mapper>
